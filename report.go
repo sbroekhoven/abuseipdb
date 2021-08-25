@@ -50,9 +50,6 @@ func Report(c *Configuration, ipAddress string, categories string, comment strin
 		return ReportResponse{}, err
 	}
 
-	// req, err := http.NewRequest("POST", fmt.Sprintf("%s/token", siteHost), bytes.NewBufferString(values.Encode()))
-	// req.Header.Set("Content-Type", "application/x-www-form-urlencoded; param=value") // This makes it work
-
 	request.Header.Add("Key", c.APIKey)
 	request.Header.Add("Accept", "application/json")
 	request.Header.Add("Content-Type", "application/x-www-form-urlencoded; param=value")
@@ -69,7 +66,6 @@ func Report(c *Configuration, ipAddress string, categories string, comment strin
 		return ReportResponse{}, err
 	}
 
-	// var response ReportResponse
 	response := ReportResponse{}
 	json.Unmarshal(body, &response)
 	return response, err
