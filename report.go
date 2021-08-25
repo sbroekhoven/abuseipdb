@@ -68,17 +68,7 @@ func Report(c *Configuration, ipAddress string, categories string, comment strin
 	if err != nil {
 		return ReportResponse{}, err
 	}
-	/*
-		if resp.StatusCode != 200 {
-			// For testing
-			fmt.Println(resp.Status)
-			fmt.Println(string(body))
-			response := ReportResponse{}
-			json.Unmarshal(body, &response)
-			err := errors.New(response.Errors.Detail)
-			return response, err
-		}
-	*/
+
 	// var response ReportResponse
 	response := ReportResponse{}
 	json.Unmarshal(body, &response)
