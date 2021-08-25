@@ -42,12 +42,12 @@ func Report(c *Configuration, ipAddress string, categories string, comment strin
 		Timeout: timeout,
 	}
 
-	data := url.Values{}
-	data.Set("ipAddress", ipAddress)
-	data.Set("categories", categories)
-	data.Set("comment", comment)
+	values := url.Values{}
+	values.Set("ip", ipAddress)
+	values.Set("categories", categories)
+	values.Set("comment", comment)
 
-	request, err := http.NewRequest(http.MethodPost, APIEndpoint, strings.NewReader(data.Encode()))
+	request, err := http.NewRequest("POST", APIEndpoint, strings.NewReader(data.Encode()))
 	if err != nil {
 		log.Fatalln(err)
 	}
