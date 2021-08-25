@@ -42,7 +42,7 @@ type checkReport struct {
 	ReporterCountryName string `json:"reporterCountryName"`
 }
 
-func Check(c *Configuration, ipAddress string, maxAgeInDays int, verbose bool) (CheckResponse, error) {
+func Check(key string, ipAddress string, maxAgeInDays int, verbose bool) (CheckResponse, error) {
 	timeout := time.Duration(5 * time.Second)
 	client := http.Client{
 		Timeout: timeout,
@@ -53,7 +53,7 @@ func Check(c *Configuration, ipAddress string, maxAgeInDays int, verbose bool) (
 		log.Fatalln(err)
 	}
 
-	request.Header.Add("Key", c.APIKey)
+	request.Header.Add("Key", key)
 	request.Header.Add("Accept", "application/json")
 	request.Header.Add("User-Agent", "Check AbuseIPDB by github.com/binaryfigments")
 

@@ -34,7 +34,7 @@ type blacklistData struct {
 }
 
 // Get IP's to blacklist from abuseIPDB.com
-func Blacklist(c *Configuration, confidenceMinimum int) (BlacklistResponse, error) {
+func Blacklist(key string, confidenceMinimum int) (BlacklistResponse, error) {
 	timeout := time.Duration(5 * time.Second)
 	client := http.Client{
 		Timeout: timeout,
@@ -45,7 +45,7 @@ func Blacklist(c *Configuration, confidenceMinimum int) (BlacklistResponse, erro
 		log.Fatalln(err)
 	}
 
-	request.Header.Add("Key", c.APIKey)
+	request.Header.Add("Key", key)
 	request.Header.Add("Accept", "application/json")
 	request.Header.Add("User-Agent", "Check AbuseIPDB by github.com/binaryfigments")
 
@@ -73,7 +73,7 @@ func Blacklist(c *Configuration, confidenceMinimum int) (BlacklistResponse, erro
 
 // Get IP's to blacklist from abuseIPDB.com
 // TODO: Maybe real text output and not JSON.
-func BlacklistPlaintext(c *Configuration, confidenceMinimum int, limit int) (BlacklistPlaintextResponse, error) {
+func BlacklistPlaintext(key string, confidenceMinimum int, limit int) (BlacklistPlaintextResponse, error) {
 	timeout := time.Duration(5 * time.Second)
 	client := http.Client{
 		Timeout: timeout,
@@ -84,7 +84,7 @@ func BlacklistPlaintext(c *Configuration, confidenceMinimum int, limit int) (Bla
 		log.Fatalln(err)
 	}
 
-	request.Header.Add("Key", c.APIKey)
+	request.Header.Add("Key", key)
 	request.Header.Add("Accept", "text/plain")
 	request.Header.Add("User-Agent", "Check AbuseIPDB by github.com/binaryfigments")
 

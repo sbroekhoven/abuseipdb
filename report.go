@@ -32,7 +32,7 @@ type reportErrorSource struct {
 }
 
 // Report function to report 1 IP address to AbuseIPDB
-func Report(c *Configuration, ipAddress string, categories string, comment string) (ReportResponse, error) {
+func Report(key string, ipAddress string, categories string, comment string) (ReportResponse, error) {
 	timeout := time.Duration(5 * time.Second)
 	client := http.Client{
 		Timeout: timeout,
@@ -48,7 +48,7 @@ func Report(c *Configuration, ipAddress string, categories string, comment strin
 		return ReportResponse{}, err
 	}
 
-	request.Header.Add("Key", c.APIKey)
+	request.Header.Add("Key", key)
 	request.Header.Add("Accept", "application/json")
 	request.Header.Add("Content-Type", "application/x-www-form-urlencoded; param=value")
 	request.Header.Add("User-Agent", "Check AbuseIPDB by github.com/binaryfigments")
