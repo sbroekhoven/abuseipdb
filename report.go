@@ -5,6 +5,8 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
+	"strings"
 	"time"
 )
 
@@ -39,7 +41,12 @@ func Report(c *Configuration, ipAddress string, categories string, comment strin
 		Timeout: timeout,
 	}
 
-	request, err := http.NewRequest("POST", APIEndpoint, nil)
+	data := url.Values{}
+	data.Set("ipAddress", ipAddress)
+	data.Set("categories", categories)
+	data.Set("comment", comment)
+
+	request, err := http.NewRequest(http.MethodPost, APIEndpoint, strings.NewReader(data.Encode()))
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -47,12 +54,6 @@ func Report(c *Configuration, ipAddress string, categories string, comment strin
 	request.Header.Add("Key", c.APIKey)
 	request.Header.Add("Accept", "application/json")
 	request.Header.Add("User-Agent", "Check AbuseIPDB by github.com/binaryfigments")
-
-	query := request.URL.Query()
-	query.Add("ipAddress", ipAddress)
-	query.Add("categories", categories)
-	query.Add("comment", comment)
-	request.URL.RawQuery = query.Encode()
 
 	resp, err := client.Do(request)
 	if err != nil {
