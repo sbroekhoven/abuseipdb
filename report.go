@@ -12,8 +12,8 @@ import (
 // Documentation: https://docs.abuseipdb.com/#report-endpoint
 
 type ReportResponse struct {
-	Data  reportData  `json:"data,omitempty"`
-	Error reportError `json:"error,omitempty"`
+	Data   reportData   `json:"data,omitempty"`
+	Errors reportErrors `json:"errors,omitempty"`
 }
 
 type reportData struct {
@@ -21,7 +21,7 @@ type reportData struct {
 	AbuseConfidenceScore int    `json:"abuseConfidenceScore,omitempty"`
 }
 
-type reportError struct {
+type reportErrors struct {
 	Detail string            `json:"detail,omitempty"`
 	Status int               `json:"status,omitempty"`
 	Source reportErrorSource `json:"source,omitempty"`
