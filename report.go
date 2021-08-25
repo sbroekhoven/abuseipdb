@@ -47,7 +47,7 @@ func Report(c *Configuration, ipAddress string, categories string, comment strin
 	values.Set("categories", categories)
 	values.Set("comment", comment)
 
-	request, err := http.NewRequest("POST", APIEndpoint, strings.NewReader(data.Encode()))
+	request, err := http.NewRequest("POST", APIEndpoint, strings.NewReader(values.Encode()))
 	if err != nil {
 		log.Fatalln(err)
 	}
