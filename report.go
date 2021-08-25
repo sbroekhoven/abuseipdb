@@ -3,6 +3,7 @@ package abuseipdb
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -72,6 +73,10 @@ func Report(c *Configuration, ipAddress string, categories string, comment strin
 	// var response ReportResponse
 	response := ReportResponse{}
 	json.Unmarshal(body, &response)
+
+	// For testing
+	fmt.Println(resp.Status)
+	fmt.Println(string(body))
 
 	return response, err
 }
