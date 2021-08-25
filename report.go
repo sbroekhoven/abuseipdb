@@ -76,8 +76,5 @@ func Report(c *Configuration, ipAddress string, categories string, comment strin
 	response := ReportResponse{}
 	json.Unmarshal(body, &response)
 
-	// For testing
-	fmt.Println(string(body))
-
 	return response, err
 }
