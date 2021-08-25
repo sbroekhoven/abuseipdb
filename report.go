@@ -2,6 +2,7 @@ package abuseipdb
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -59,6 +60,8 @@ func Report(c *Configuration, ipAddress string, categories string, comment strin
 	if err != nil {
 		return ReportResponse{}, err
 	}
+
+	fmt.Println(resp.Status)
 
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
