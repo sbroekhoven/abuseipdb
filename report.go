@@ -11,23 +11,23 @@ import (
 // Documentation: https://docs.abuseipdb.com/#report-endpoint
 
 type ReportResponse struct {
-	Data  reportData  `json:"data"`
-	Error reportError `json:"error"`
+	Data  reportData  `json:"data,omitempty"`
+	Error reportError `json:"error,omitempty"`
 }
 
 type reportData struct {
-	IpAddress            string `json:"ipAddress"`
-	AbuseConfidenceScore int    `json:"abuseConfidenceScore"`
+	IpAddress            string `json:"ipAddress,omitempty"`
+	AbuseConfidenceScore int    `json:"abuseConfidenceScore,omitempty"`
 }
 
 type reportError struct {
-	Detail string            `json:"detail"`
-	Status int               `json:"status"`
-	Source reportErrorSource `json:"source"`
+	Detail string            `json:"detail,omitempty"`
+	Status int               `json:"status,omitempty"`
+	Source reportErrorSource `json:"source,omitempty"`
 }
 
 type reportErrorSource struct {
-	Parameter string `json:"parameter"`
+	Parameter string `json:"parameter,omitempty"`
 }
 
 // Report function to report 1 IP address to AbuseIPDB
