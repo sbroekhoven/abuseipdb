@@ -3,7 +3,6 @@ package abuseipdb
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -13,8 +12,8 @@ import (
 // Documentation: https://docs.abuseipdb.com/#report-endpoint
 
 type ReportResponse struct {
-	Data   reportData   `json:"data,omitempty"`
-	Errors reportErrors `json:"errors,omitempty"`
+	Data   reportData     `json:"data,omitempty"`
+	Errors []ReportErrors `json:"errors,omitempty"`
 }
 
 type reportData struct {
@@ -22,7 +21,7 @@ type reportData struct {
 	AbuseConfidenceScore int    `json:"abuseConfidenceScore,omitempty"`
 }
 
-type reportErrors struct {
+type ReportErrors struct {
 	Detail string            `json:"detail,omitempty"`
 	Status int               `json:"status,omitempty"`
 	Source reportErrorSource `json:"source,omitempty"`
@@ -69,14 +68,19 @@ func Report(c *Configuration, ipAddress string, categories string, comment strin
 	if err != nil {
 		return ReportResponse{}, err
 	}
-
+	/*
+		if resp.StatusCode != 200 {
+			// For testing
+			fmt.Println(resp.Status)
+			fmt.Println(string(body))
+			response := ReportResponse{}
+			json.Unmarshal(body, &response)
+			err := errors.New(response.Errors.Detail)
+			return response, err
+		}
+	*/
 	// var response ReportResponse
 	response := ReportResponse{}
 	json.Unmarshal(body, &response)
-
-	// For testing
-	fmt.Println(resp.Status)
-	fmt.Println(string(body))
-
 	return response, err
 }
