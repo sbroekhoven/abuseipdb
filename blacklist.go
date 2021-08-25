@@ -126,6 +126,3 @@ func BlacklistPlaintext(c *Configuration, confidenceMinimum int, limit int) (Bla
 
 	return response, err
 }
-
-// X-Generated-At
-// fmt.Println(resp.Header.Get("X-Generated-At"))
