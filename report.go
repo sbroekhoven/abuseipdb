@@ -33,8 +33,6 @@ type reportErrorSource struct {
 
 // Report function to report 1 IP address to AbuseIPDB
 func Report(c *Configuration, ipAddress string, categories string, comment string) (ReportResponse, error) {
-	APIEndpoint := c.APIURL + "/report"
-
 	timeout := time.Duration(5 * time.Second)
 	client := http.Client{
 		Timeout: timeout,
@@ -45,7 +43,7 @@ func Report(c *Configuration, ipAddress string, categories string, comment strin
 	values.Set("categories", categories)
 	values.Set("comment", comment)
 
-	request, err := http.NewRequest("POST", APIEndpoint, bytes.NewBufferString(values.Encode()))
+	request, err := http.NewRequest("POST", "https://api.abuseipdb.com/api/v2/report", bytes.NewBufferString(values.Encode()))
 	if err != nil {
 		return ReportResponse{}, err
 	}

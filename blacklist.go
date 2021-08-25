@@ -35,14 +35,12 @@ type blacklistData struct {
 
 // Get IP's to blacklist from abuseIPDB.com
 func Blacklist(c *Configuration, confidenceMinimum int) (BlacklistResponse, error) {
-	APIEndpoint := c.APIURL + "/blacklist"
-
 	timeout := time.Duration(5 * time.Second)
 	client := http.Client{
 		Timeout: timeout,
 	}
 
-	request, err := http.NewRequest("GET", APIEndpoint, nil)
+	request, err := http.NewRequest("GET", "https://api.abuseipdb.com/api/v2/blacklist", nil)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -76,14 +74,12 @@ func Blacklist(c *Configuration, confidenceMinimum int) (BlacklistResponse, erro
 // Get IP's to blacklist from abuseIPDB.com
 // TODO: Maybe real text output and not JSON.
 func BlacklistPlaintext(c *Configuration, confidenceMinimum int, limit int) (BlacklistPlaintextResponse, error) {
-	APIEndpoint := c.APIURL + "/blacklist"
-
 	timeout := time.Duration(5 * time.Second)
 	client := http.Client{
 		Timeout: timeout,
 	}
 
-	request, err := http.NewRequest("GET", APIEndpoint, nil)
+	request, err := http.NewRequest("GET", "https://api.abuseipdb.com/api/v2/blacklist", nil)
 	if err != nil {
 		log.Fatalln(err)
 	}

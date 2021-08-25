@@ -43,14 +43,12 @@ type checkReport struct {
 }
 
 func Check(c *Configuration, ipAddress string, maxAgeInDays int, verbose bool) (CheckResponse, error) {
-	APIEndpoint := c.APIURL + "/check"
-
 	timeout := time.Duration(5 * time.Second)
 	client := http.Client{
 		Timeout: timeout,
 	}
 
-	request, err := http.NewRequest("GET", APIEndpoint, nil)
+	request, err := http.NewRequest("GET", "https://api.abuseipdb.com/api/v2/check", nil)
 	if err != nil {
 		log.Fatalln(err)
 	}
