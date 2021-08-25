@@ -30,6 +30,7 @@ type reportErrorSource struct {
 	Parameter string `json:"parameter"`
 }
 
+// Report function to report 1 IP address to AbuseIPDB
 func Report(c *Configuration, ipAddress string, categories string, comment string) (ReportResponse, error) {
 	APIEndpoint := c.APIURL + "/report"
 
