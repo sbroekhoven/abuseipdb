@@ -1,13 +1,12 @@
 package abuseipdb
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"net/url"
-	"strings"
 	"time"
 )
 
@@ -47,13 +46,17 @@ func Report(c *Configuration, ipAddress string, categories string, comment strin
 	values.Set("categories", categories)
 	values.Set("comment", comment)
 
-	request, err := http.NewRequest("POST", APIEndpoint, strings.NewReader(values.Encode()))
+	request, err := http.NewRequest("POST", APIEndpoint, bytes.NewBufferString(values.Encode()))
 	if err != nil {
-		log.Fatalln(err)
+		return ReportResponse{}, err
 	}
+
+	// req, err := http.NewRequest("POST", fmt.Sprintf("%s/token", siteHost), bytes.NewBufferString(values.Encode()))
+	// req.Header.Set("Content-Type", "application/x-www-form-urlencoded; param=value") // This makes it work
 
 	request.Header.Add("Key", c.APIKey)
 	request.Header.Add("Accept", "application/json")
+	request.Header.Add("Content-Type", "application/x-www-form-urlencoded; param=value")
 	request.Header.Add("User-Agent", "Check AbuseIPDB by github.com/binaryfigments")
 
 	resp, err := client.Do(request)
@@ -72,6 +75,9 @@ func Report(c *Configuration, ipAddress string, categories string, comment strin
 	// var response ReportResponse
 	response := ReportResponse{}
 	json.Unmarshal(body, &response)
+
+	// For testing
+	fmt.Println(string(body))
 
 	return response, err
 }
