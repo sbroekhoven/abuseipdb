@@ -1,3 +1,3 @@
-module github.com/binaryfigments/abuseipdb
+module github.com/sbroekhoven/abuseipdb
 
 go 1.17
